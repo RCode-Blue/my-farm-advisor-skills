@@ -97,7 +97,10 @@ def coverage(tif_path: str | Path, geom_wgs84, *, nodata_extra: float | None = N
         in_field = geometry_mask([geom.__geo_interface__], out_shape=ds.shape,
                                  transform=ds.transform, invert=True)
         arr = ds.read(1, masked=True)
-        filled = np.asarray(np.ma.filled(arr, np.nan), dtype="float64")
+        # Cast to float64 BEFORE filling: numpy's MaskedArray.filled() rejects
+        # a nan fill_value on an integer dtype (NASADEM/ALOS int16 sources)
+        # with "Cannot convert fill_value nan to dtype int16" if filled first.
+        filled = np.ma.filled(arr.astype("float64"), np.nan)
         valid = np.isfinite(filled)
         if nodata_extra is not None:
             valid &= filled != nodata_extra
@@ -106,8 +109,13 @@ def coverage(tif_path: str | Path, geom_wgs84, *, nodata_extra: float | None = N
             cell_area *= (111320.0 ** 2) * max(0.2, math.cos(math.radians(geom.centroid.y)))
         field_cells = int(in_field.sum())
         field_valid = int((in_field & valid).sum())
-        # margin actually present: field bounds vs raster bounds, in metres
-        gb = gpd.GeoSeries([geom]).bounds.iloc[0]
+        # margin actually present: field bounds vs raster bounds, in metres.
+        # geom.bounds is a plain (minx, miny, maxx, maxy) tuple -- use it
+        # directly. The previous gpd.GeoSeries(...).bounds.iloc[0] indexed
+        # that row positionally (gb[3]/gb[2]), but pandas Series.__getitem__
+        # is label-only on recent pandas (columns are minx/miny/maxx/maxy),
+        # so gb[3] raised KeyError: 3 for every clipped DEM.
+        gb = geom.bounds
         m_lat = (ds.bounds.top - gb[3]) if ds.bounds.top > gb[3] else 0.0
         m_lon = (gb[2] - ds.bounds.left) if ds.bounds.left < gb[2] else 0.0
         if ds.crs.is_geographic:
