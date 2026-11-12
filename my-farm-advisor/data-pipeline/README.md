@@ -252,6 +252,19 @@ export DATA_PIPELINE_DATA_ROOT=/absolute/path/to/my-farm-advisor-runtime
 
 The `environment.d` file applies to future sessions only. It does not update an already-running shell.
 
+## Grower web map subskill
+
+For lightweight browser-based field portfolio exploration, use the
+[grower-webmap](grower-webmap/README.md) subskill. It generates self-contained
+HTML maps with vendored Leaflet and online Esri World Imagery:
+
+```bash
+export DATA_PIPELINE_DATA_ROOT=/absolute/path/to/my-farm-advisor-runtime
+cd "${DATA_PIPELINE_DATA_ROOT}/data-pipeline/src"
+"${DATA_PIPELINE_DATA_ROOT}/data-pipeline/.venv/bin/python" \
+  scripts/reporting/generate_grower_webmap.py --grower-slug il-grower
+```
+
 ## Running inside an agent CLI
 
 When invoking the pipeline from an agent harness CLI (OpenClaw, Hermes, or plain shell), you can still

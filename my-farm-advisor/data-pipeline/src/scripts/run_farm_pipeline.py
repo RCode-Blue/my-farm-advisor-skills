@@ -34,7 +34,7 @@ from bootstrap_runtime import ensure_runtime_environment
 
 ensure_runtime_environment()
 
-from lib.paths import farm_boundary_path, farm_manifest_dir, farm_report_asset_path, grower_manifest_path
+from lib.paths import farm_boundary_path, farm_manifest_dir, farm_report_asset_path, grower_dir, grower_manifest_path
 from lib.runtime_paths import resolve_runtime_paths
 from reporting_bootstrap import ensure_canonical_data_tree
 
@@ -323,6 +323,7 @@ def main() -> None:
          ("--all-fields",), False),
         ("reporting/generate_farm_html.py", "Self-contained HTML report", (), False),
         ("reporting/generate_farm_markdown.py", "Markdown report", (), False),
+        ("reporting/generate_grower_webmap.py", "Grower interactive web map", (), False),
     ]
 
     all_ok = True
@@ -388,6 +389,9 @@ def main() -> None:
             output = farm_report_asset_path(args.grower_slug, args.farm_slug, extension)
             if output.exists():
                 print(f"    {_runtime_relative(output)}")
+        webmap_output = grower_dir(args.grower_slug) / "derived" / "reports" / f"{args.grower_slug}_field_webmap.html"
+        if webmap_output.exists():
+            print(f"    {_runtime_relative(webmap_output)}")
     print("=" * 60)
     print()
 
