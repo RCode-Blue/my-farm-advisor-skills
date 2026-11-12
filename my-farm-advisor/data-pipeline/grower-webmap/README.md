@@ -18,7 +18,7 @@ interactive popup inspections and field navigation controls.
 |---|---|
 | **Field Boundaries** | Actual field polygons from data pipeline outputs (USDA CSB / OSM) |
 | **Basemap** | High-resolution Esri World Imagery online satellite tiles |
-| **Offline Resilience** | Vendored Leaflet 1.9.4 CSS/JS embedded inline; UI functions offline |
+| **Self-Contained Engine** | Vendored Leaflet 1.9.4 CSS/JS embedded inline; vector UI and boundaries render without CDN access (satellite basemap tiles fetch online) |
 | **Interactive Popups** | Click any field to inspect grower, farm, field name, state, county, crop, acreage, and source |
 | **Field List Sidebar** | Collapsible sidebar listing all fields with search/filter, crop badges, and click-to-zoom |
 | **Lightweight Footprint** | Complete HTML bundle is under 200 KB — no heavy rasters or binary bundles embedded |

@@ -11,10 +11,10 @@ The grower web map is designed around three principles:
    mapping library, styling, GeoJSON boundaries, and application logic, is serialized
    into a single static HTML file. No web server, database, or external asset folder
    is required to inspect the map.
-2. **Offline-Resilient Architecture:** By inlining vendored Leaflet JS and CSS, the map
-   UI, field polygons, tooltips, sidebar, search filter, and popups function even without
-   an active internet connection. When connected to the internet, online satellite tiles
-   (Esri World Imagery) automatically load underneath.
+2. **Zero-CDN Architecture:** By inlining vendored Leaflet JS and CSS, the map
+   UI, field polygons, tooltips, sidebar, search filter, and popups render without
+   any external CDN or script dependencies. When connected to the internet, online
+   satellite tiles (Esri World Imagery) automatically stream in as the background basemap.
 3. **Zero Heavy Bloat:** Raw GeoTIFFs, satellite bands, and multi-gigabyte raster files
    are intentionally kept out of the HTML document. Only vector boundary geometries and
    descriptive metadata are included, keeping output size below 200 KB.
