@@ -96,6 +96,15 @@ cd "${DATA_PIPELINE_DATA_ROOT}/data-pipeline/src"
   --weather-time-standard lst
 ```
 
+Generate lightweight interactive grower web map:
+
+```bash
+export DATA_PIPELINE_DATA_ROOT=/absolute/path/to/my-farm-advisor-runtime
+cd "${DATA_PIPELINE_DATA_ROOT}/data-pipeline/src"
+"${DATA_PIPELINE_DATA_ROOT}/data-pipeline/.venv/bin/python" \
+  scripts/reporting/generate_grower_webmap.py --grower-slug il-grower
+```
+
 Initialize shared geoadmin, maturity, weather, and CDL assets without seeding a farm:
 
 ```bash
