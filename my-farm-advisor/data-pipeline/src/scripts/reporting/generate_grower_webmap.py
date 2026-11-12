@@ -5,7 +5,7 @@
 Builds a self-contained single-file HTML map embedding actual field polygon
 boundaries, interactive zoom/pan controls, field navigation sidebar,
 satellite-style online basemap (Esri World Imagery), and field metadata popups.
-Vendored Leaflet is embedded inline for offline resilience.
+Vendored Leaflet is embedded inline to eliminate external CDN dependencies.
 """
 
 from __future__ import annotations
@@ -606,7 +606,7 @@ html, body {{
 
       <div class="sidebar-footer">
         <span>Farms: {len(farms_meta)}</span>
-        <span>Offline-capable &bull; Esri Basemap</span>
+        <span>Self-contained UI &bull; Esri Basemap</span>
       </div>
     </aside>
 

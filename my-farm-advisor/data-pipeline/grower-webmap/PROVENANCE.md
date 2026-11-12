@@ -6,7 +6,7 @@
 - **Version:** 1.9.4
 - **License:** BSD-2-Clause (Copyright &copy; 2010-2023, Vladimir Agafonkin; Copyright &copy; 2010-2011, CloudMade)
 - **Usage:** Vendored under `src/scripts/reporting/vendor/leaflet/` (`leaflet.js`, `leaflet.css`, `LICENSE`)
-  and inlined at generation time into `<style>` and `<script>` tags to ensure offline operation.
+  and inlined at generation time into `<style>` and `<script>` tags to eliminate external CDN dependencies.
 - **Source:** https://github.com/Leaflet/Leaflet / https://unpkg.com/leaflet@1.9.4/
 
 ### 2. Basemap Tiles (Esri World Imagery)
