@@ -48,11 +48,11 @@
 
 ### Field ia-r2 (731.3 acres)
 
-**Poster:** [field_report.png](../../fields/ia-r2/derived/reports/field_report.png)
+**Poster:** [field_report.png](fields/ia-r2/derived/reports/field_report.png)
 
-**Soil Profile Cards:** [Soil Properties](../../fields/ia-r2/derived/summaries/soil_properties.png) | [Texture RGB](../../fields/ia-r2/derived/summaries/soil_texture.png)
+**Soil Profile Cards:** [Soil Properties](fields/ia-r2/derived/summaries/soil_properties.png) | [Texture RGB](fields/ia-r2/derived/summaries/soil_texture.png)
 
-**NDVI Cards:** [Corn average NDVI](../../fields/ia-r2/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](../../fields/ia-r2/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](../../fields/ia-r2/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](../../fields/ia-r2/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](../../fields/ia-r2/derived/features/ndvi_current_season_cumulative.png)
+**NDVI Cards:** [Corn average NDVI](fields/ia-r2/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](fields/ia-r2/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](fields/ia-r2/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](fields/ia-r2/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](fields/ia-r2/derived/features/ndvi_current_season_cumulative.png)
 
 **Crop Rotation History:** Corn -> Soybeans -> Corn -> Soybeans -> Corn
 
@@ -97,11 +97,11 @@
 
 ### Field ia-r3 (661.9 acres)
 
-**Poster:** [field_report.png](../../fields/ia-r3/derived/reports/field_report.png)
+**Poster:** [field_report.png](fields/ia-r3/derived/reports/field_report.png)
 
-**Soil Profile Cards:** [Soil Properties](../../fields/ia-r3/derived/summaries/soil_properties.png) | [Texture RGB](../../fields/ia-r3/derived/summaries/soil_texture.png)
+**Soil Profile Cards:** [Soil Properties](fields/ia-r3/derived/summaries/soil_properties.png) | [Texture RGB](fields/ia-r3/derived/summaries/soil_texture.png)
 
-**NDVI Cards:** [Corn average NDVI](../../fields/ia-r3/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](../../fields/ia-r3/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](../../fields/ia-r3/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](../../fields/ia-r3/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](../../fields/ia-r3/derived/features/ndvi_current_season_cumulative.png)
+**NDVI Cards:** [Corn average NDVI](fields/ia-r3/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](fields/ia-r3/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](fields/ia-r3/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](fields/ia-r3/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](fields/ia-r3/derived/features/ndvi_current_season_cumulative.png)
 
 **Crop Rotation History:** Soybeans -> Corn -> Soybeans -> Corn -> Soybeans
 
@@ -146,11 +146,11 @@
 
 ### Field ia-r1 (152.5 acres)
 
-**Poster:** [field_report.png](../../fields/ia-r1/derived/reports/field_report.png)
+**Poster:** [field_report.png](fields/ia-r1/derived/reports/field_report.png)
 
-**Soil Profile Cards:** [Soil Properties](../../fields/ia-r1/derived/summaries/soil_properties.png) | [Texture RGB](../../fields/ia-r1/derived/summaries/soil_texture.png)
+**Soil Profile Cards:** [Soil Properties](fields/ia-r1/derived/summaries/soil_properties.png) | [Texture RGB](fields/ia-r1/derived/summaries/soil_texture.png)
 
-**NDVI Cards:** [Corn average NDVI](../../fields/ia-r1/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](../../fields/ia-r1/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](../../fields/ia-r1/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](../../fields/ia-r1/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](../../fields/ia-r1/derived/features/ndvi_current_season_cumulative.png)
+**NDVI Cards:** [Corn average NDVI](fields/ia-r1/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](fields/ia-r1/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](fields/ia-r1/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](fields/ia-r1/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](fields/ia-r1/derived/features/ndvi_current_season_cumulative.png)
 
 **Crop Rotation History:** Soybeans -> Corn -> Soybeans -> Corn -> Soybeans
 
@@ -194,11 +194,11 @@
 
 ### Field ia-r6 (121.9 acres)
 
-**Poster:** [field_report.png](../../fields/ia-r6/derived/reports/field_report.png)
+**Poster:** [field_report.png](fields/ia-r6/derived/reports/field_report.png)
 
-**Soil Profile Cards:** [Soil Properties](../../fields/ia-r6/derived/summaries/soil_properties.png) | [Texture RGB](../../fields/ia-r6/derived/summaries/soil_texture.png)
+**Soil Profile Cards:** [Soil Properties](fields/ia-r6/derived/summaries/soil_properties.png) | [Texture RGB](fields/ia-r6/derived/summaries/soil_texture.png)
 
-**NDVI Cards:** [Corn average NDVI](../../fields/ia-r6/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](../../fields/ia-r6/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](../../fields/ia-r6/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](../../fields/ia-r6/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](../../fields/ia-r6/derived/features/ndvi_current_season_cumulative.png)
+**NDVI Cards:** [Corn average NDVI](fields/ia-r6/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](fields/ia-r6/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](fields/ia-r6/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](fields/ia-r6/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](fields/ia-r6/derived/features/ndvi_current_season_cumulative.png)
 
 **Crop Rotation History:** Soybeans -> Corn -> Soybeans -> Corn -> Soybeans
 
@@ -243,11 +243,11 @@
 
 ### Field ia-r7 (70.9 acres)
 
-**Poster:** [field_report.png](../../fields/ia-r7/derived/reports/field_report.png)
+**Poster:** [field_report.png](fields/ia-r7/derived/reports/field_report.png)
 
-**Soil Profile Cards:** [Soil Properties](../../fields/ia-r7/derived/summaries/soil_properties.png) | [Texture RGB](../../fields/ia-r7/derived/summaries/soil_texture.png)
+**Soil Profile Cards:** [Soil Properties](fields/ia-r7/derived/summaries/soil_properties.png) | [Texture RGB](fields/ia-r7/derived/summaries/soil_texture.png)
 
-**NDVI Cards:** [Corn average NDVI](../../fields/ia-r7/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](../../fields/ia-r7/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](../../fields/ia-r7/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](../../fields/ia-r7/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](../../fields/ia-r7/derived/features/ndvi_current_season_cumulative.png)
+**NDVI Cards:** [Corn average NDVI](fields/ia-r7/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](fields/ia-r7/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](fields/ia-r7/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](fields/ia-r7/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](fields/ia-r7/derived/features/ndvi_current_season_cumulative.png)
 
 **Crop Rotation History:** Corn -> Corn -> Soybeans -> Corn -> Soybeans
 
@@ -291,11 +291,11 @@
 
 ### Field ia-r4 (73.2 acres)
 
-**Poster:** [field_report.png](../../fields/ia-r4/derived/reports/field_report.png)
+**Poster:** [field_report.png](fields/ia-r4/derived/reports/field_report.png)
 
-**Soil Profile Cards:** [Soil Properties](../../fields/ia-r4/derived/summaries/soil_properties.png) | [Texture RGB](../../fields/ia-r4/derived/summaries/soil_texture.png)
+**Soil Profile Cards:** [Soil Properties](fields/ia-r4/derived/summaries/soil_properties.png) | [Texture RGB](fields/ia-r4/derived/summaries/soil_texture.png)
 
-**NDVI Cards:** [Corn average NDVI](../../fields/ia-r4/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](../../fields/ia-r4/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](../../fields/ia-r4/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](../../fields/ia-r4/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](../../fields/ia-r4/derived/features/ndvi_current_season_cumulative.png)
+**NDVI Cards:** [Corn average NDVI](fields/ia-r4/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](fields/ia-r4/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](fields/ia-r4/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](fields/ia-r4/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](fields/ia-r4/derived/features/ndvi_current_season_cumulative.png)
 
 **Crop Rotation History:** Corn -> Corn -> Soybeans -> Corn -> Corn
 
@@ -339,11 +339,11 @@
 
 ### Field ia-r5 (54.3 acres)
 
-**Poster:** [field_report.png](../../fields/ia-r5/derived/reports/field_report.png)
+**Poster:** [field_report.png](fields/ia-r5/derived/reports/field_report.png)
 
-**Soil Profile Cards:** [Soil Properties](../../fields/ia-r5/derived/summaries/soil_properties.png) | [Texture RGB](../../fields/ia-r5/derived/summaries/soil_texture.png)
+**Soil Profile Cards:** [Soil Properties](fields/ia-r5/derived/summaries/soil_properties.png) | [Texture RGB](fields/ia-r5/derived/summaries/soil_texture.png)
 
-**NDVI Cards:** [Corn average NDVI](../../fields/ia-r5/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](../../fields/ia-r5/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](../../fields/ia-r5/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](../../fields/ia-r5/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](../../fields/ia-r5/derived/features/ndvi_current_season_cumulative.png)
+**NDVI Cards:** [Corn average NDVI](fields/ia-r5/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](fields/ia-r5/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](fields/ia-r5/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](fields/ia-r5/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](fields/ia-r5/derived/features/ndvi_current_season_cumulative.png)
 
 **Crop Rotation History:** Corn -> Soybeans -> Corn -> Soybeans -> Corn
 
@@ -387,11 +387,11 @@
 
 ### Field ia-r8 (76.0 acres)
 
-**Poster:** [field_report.png](../../fields/ia-r8/derived/reports/field_report.png)
+**Poster:** [field_report.png](fields/ia-r8/derived/reports/field_report.png)
 
-**Soil Profile Cards:** [Soil Properties](../../fields/ia-r8/derived/summaries/soil_properties.png) | [Texture RGB](../../fields/ia-r8/derived/summaries/soil_texture.png)
+**Soil Profile Cards:** [Soil Properties](fields/ia-r8/derived/summaries/soil_properties.png) | [Texture RGB](fields/ia-r8/derived/summaries/soil_texture.png)
 
-**NDVI Cards:** [Corn average NDVI](../../fields/ia-r8/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](../../fields/ia-r8/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](../../fields/ia-r8/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](../../fields/ia-r8/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](../../fields/ia-r8/derived/features/ndvi_current_season_cumulative.png)
+**NDVI Cards:** [Corn average NDVI](fields/ia-r8/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](fields/ia-r8/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](fields/ia-r8/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](fields/ia-r8/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](fields/ia-r8/derived/features/ndvi_current_season_cumulative.png)
 
 **Crop Rotation History:** Corn -> Soybeans -> Corn -> Soybeans -> Corn
 
@@ -435,11 +435,11 @@
 
 ### Field ia-r9 (206.3 acres)
 
-**Poster:** [field_report.png](../../fields/ia-r9/derived/reports/field_report.png)
+**Poster:** [field_report.png](fields/ia-r9/derived/reports/field_report.png)
 
-**Soil Profile Cards:** [Soil Properties](../../fields/ia-r9/derived/summaries/soil_properties.png) | [Texture RGB](../../fields/ia-r9/derived/summaries/soil_texture.png)
+**Soil Profile Cards:** [Soil Properties](fields/ia-r9/derived/summaries/soil_properties.png) | [Texture RGB](fields/ia-r9/derived/summaries/soil_texture.png)
 
-**NDVI Cards:** [Corn average NDVI](../../fields/ia-r9/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](../../fields/ia-r9/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](../../fields/ia-r9/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](../../fields/ia-r9/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](../../fields/ia-r9/derived/features/ndvi_current_season_cumulative.png)
+**NDVI Cards:** [Corn average NDVI](fields/ia-r9/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](fields/ia-r9/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](fields/ia-r9/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](fields/ia-r9/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](fields/ia-r9/derived/features/ndvi_current_season_cumulative.png)
 
 **Crop Rotation History:** Soybeans -> Corn -> Soybeans -> Corn -> Soybeans
 
@@ -483,11 +483,11 @@
 
 ### Field ia-r10 (181.9 acres)
 
-**Poster:** [field_report.png](../../fields/ia-r10/derived/reports/field_report.png)
+**Poster:** [field_report.png](fields/ia-r10/derived/reports/field_report.png)
 
-**Soil Profile Cards:** [Soil Properties](../../fields/ia-r10/derived/summaries/soil_properties.png) | [Texture RGB](../../fields/ia-r10/derived/summaries/soil_texture.png)
+**Soil Profile Cards:** [Soil Properties](fields/ia-r10/derived/summaries/soil_properties.png) | [Texture RGB](fields/ia-r10/derived/summaries/soil_texture.png)
 
-**NDVI Cards:** [Corn average NDVI](../../fields/ia-r10/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](../../fields/ia-r10/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](../../fields/ia-r10/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](../../fields/ia-r10/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](../../fields/ia-r10/derived/features/ndvi_current_season_cumulative.png)
+**NDVI Cards:** [Corn average NDVI](fields/ia-r10/derived/features/ndvi_corn.png) | [Corn 95th %ile peak NDVI](fields/ia-r10/derived/features/ndvi_corn_peak_95.png) | [Soybean average NDVI](fields/ia-r10/derived/features/ndvi_soybean.png) | [Soybean 95th %ile peak NDVI](fields/ia-r10/derived/features/ndvi_soybean_peak_95.png) | [Cumulative NDVI by crop and year](fields/ia-r10/derived/features/ndvi_current_season_cumulative.png)
 
 **Crop Rotation History:** Soybeans -> Corn -> Soybeans -> Corn -> Soybeans
 
