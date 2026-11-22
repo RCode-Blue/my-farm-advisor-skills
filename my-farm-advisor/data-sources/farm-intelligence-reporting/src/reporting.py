@@ -323,7 +323,7 @@ def choose_primary_ndvi_source(
 _RANK_COLS = [
     "area_acres",
     "headlands_pct",
-    "total_aws_inches",
+    "total_aws_cm",
     "avg_om_pct",
     "avg_ph",
     "avg_cec",
@@ -350,7 +350,7 @@ _PH_LOW = 6.0
 _PH_HIGH = 7.0
 _OM_LOW = 1.5
 _OM_HIGH = 3.0
-_AWS_LOW = 4.0
+_AWS_LOW = 10.2  # 4 in converted to cm (unsourced threshold; see to-do item 5)
 _HEADLANDS_HIGH = 18.0
 _CLAY_HIGH = 35.0
 _CDL_LOW_DIVERSITY = 1
@@ -385,16 +385,16 @@ def compute_management_implications(field_row: pd.Series | dict) -> list[str]:
                 f"OM {om:.1f}% is high for the region; strong water-holding and nutrient cycling capacity"
             )
 
-    aws = row.get("total_aws_inches")
+    aws = row.get("total_aws_cm")
     if aws is not None and not np.isnan(float(aws)):
         aws = float(aws)
         if aws < _AWS_LOW:
             implications.append(
-                f"Total available water storage {aws:.1f} in is below 4 in; elevated drought sensitivity"
+                f"Total available water storage {aws:.1f} cm is below 10.2 cm; elevated drought sensitivity"
             )
         else:
             implications.append(
-                f"Available water storage {aws:.1f} in provides good buffer against short-term drought stress"
+                f"Available water storage {aws:.1f} cm provides good buffer against short-term drought stress"
             )
 
     drainage = row.get("drainage_class", row.get("drainagecl", ""))

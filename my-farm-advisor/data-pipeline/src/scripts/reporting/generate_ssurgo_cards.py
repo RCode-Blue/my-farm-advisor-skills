@@ -98,8 +98,8 @@ def plot_soil_properties_card(
 
     # Plot 2: Water Storage and CEC
     ax = axes[0, 1]
-    metrics = ["AWS (in)", "CEC"]
-    values2 = [row.get("total_aws_inches", 0) or 0, row.get("avg_cec", 0) or 0]
+    metrics = ["AWS (cm)", "CEC"]
+    values2 = [row.get("total_aws_cm", 0) or 0, row.get("avg_cec", 0) or 0]
     colors2 = ["#20B2AA", "#9370DB"]
     bars2 = ax.bar(metrics, values2, color=colors2, alpha=0.7, edgecolor="black")
     ax.set_ylabel("Value")
@@ -309,7 +309,7 @@ def plot_farm_comparison_card(
         field_ids.append(field_id[-8:])
         om_values.append(row.get("avg_om_pct", 0) or 0)
         ph_values.append(row.get("avg_ph", 0) or 0)
-        aws_values.append(row.get("total_aws_inches", 0) or 0)
+        aws_values.append(row.get("total_aws_cm", 0) or 0)
         clay_values.append(row.get("avg_clay_pct", 0) or 0)
 
     if not field_ids:
@@ -367,7 +367,7 @@ def plot_farm_comparison_card(
     # Plot 3: Available Water Storage
     ax = axes[1, 0]
     bars = ax.bar(x_pos, aws_values, color=colors, alpha=0.7, edgecolor="black")
-    ax.set_ylabel("AWS (inches)")
+    ax.set_ylabel("AWS (cm)")
     ax.set_title("Available Water Storage by Field", fontsize=11, fontweight="bold")
     ax.set_xticks(x_pos)
     ax.set_xticklabels(field_ids, rotation=45, ha="right")

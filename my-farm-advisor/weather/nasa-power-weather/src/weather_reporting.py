@@ -22,15 +22,17 @@ def prepare_weather_reporting(
 
 def summarize_weather_variability(weather: pd.DataFrame) -> pd.DataFrame:
     df = prepare_weather_reporting(weather)
+    yearly_precip = df.groupby(["field_id", "year"])["PRECTOTCORR"].sum().rename("yearly_precip_mm")
+    annual_precip = yearly_precip.groupby("field_id").mean().rename("annual_precip_mm")
     grouped = df.groupby("field_id")
-    return grouped.agg(
+    summary = grouped.agg(
         avg_temp_c=("T2M", "mean"),
         avg_precip_mm=("PRECTOTCORR", "mean"),
-        annual_precip_mm=("PRECTOTCORR", "sum"),
         avg_gdd=("gdd", "mean"),
         max_gdd_cumulative=("gdd_cumulative", "max"),
         years=("year", "nunique"),
     ).reset_index()
+    return summary.merge(annual_precip.reset_index(), on="field_id", how="left")
 
 
 def _frost_markers(df: pd.DataFrame) -> tuple[float | None, float | None]:

@@ -285,6 +285,21 @@ def _write_summary(soil_data: pd.DataFrame) -> None:
     raise RuntimeError("_write_summary requires an explicit output path")
 
 
+def _profile_water_cm(soil_data: pd.DataFrame) -> pd.Series:
+    """Depth-weighted plant-available water (cm) over a 200 cm profile, per field.
+
+    Same formula as ssurgo_soil.summarize_ssurgo_by_field: AWC (cm/cm) times
+    horizon thickness (cm), weighted by component percentage, normalised to 200 cm.
+    """
+    d = soil_data.dropna(subset=["hzdept_r", "hzdepb_r", "awc_r", "comppct_r"]).copy()
+    d["thickness"] = d["hzdepb_r"] - d["hzdept_r"]
+    d = d[d["thickness"] > 0]
+    d["aws"] = d["awc_r"] * d["thickness"] * d["comppct_r"]
+    d["depth"] = d["thickness"] * d["comppct_r"]
+    totals = d.groupby("field_id")[["aws", "depth"]].sum()
+    return (totals["aws"] / totals["depth"] * 200).rename("total_aws_cm").round(2)
+
+
 def _soil_polygon_cache_has_features(path: Path) -> bool:
     if not path.exists():
         return False
@@ -334,6 +349,14 @@ def _write_field_polygon_caches(
         if polygons.empty:
             continue
         polygons["field_id"] = field_id
+        field_soil = soil_rows.loc[soil_rows["field_id"].astype(str) == field_id]
+        if "compname" in field_soil.columns and not field_soil.empty:
+            dominant = (
+                field_soil.sort_values("comppct_r", ascending=False)
+                .drop_duplicates("mukey")
+                .set_index("mukey")["compname"]
+            )
+            polygons["compname"] = polygons["mukey"].astype(str).map(dominant)
         field_boundary = gpd.GeoDataFrame(
             fields_wgs84[fields_wgs84["field_id"].astype(str) == field_id].copy(),
             geometry="geometry",
@@ -613,7 +636,6 @@ def main():
                 n_horizons=("mukey", "count"),
                 avg_om_pct=("om_r", "mean"),
                 avg_ph=("ph1to1h2o_r", "mean"),
-                total_aws_inches=("awc_r", "sum"),
                 avg_cec=("cec7_r", "mean"),
                 avg_clay_pct=("claytotal_r", "mean"),
                 avg_sand_pct=("sandtotal_r", "mean"),
@@ -623,6 +645,7 @@ def main():
             )
             .assign(ph_constraint="none", erosion_risk="moderate")
         )
+        grouped = grouped.merge(_profile_water_cm(soil_data).reset_index(), on="field_id", how="left")
         grouped.to_csv(farm_summary_output, index=False)
 
         if field_slug_map:

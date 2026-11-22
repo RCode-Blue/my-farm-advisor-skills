@@ -406,18 +406,18 @@ def generate_field_recommendations(
                 f"Organic matter is strong ({om:.1f}%); use that nutrient cycling and water-buffering advantage in yield-response rankings."
             )
 
-    aws = _safe_float(field_row.get("total_aws_inches"))
+    aws = _safe_float(field_row.get("total_aws_cm"))
     if aws is not None:
-        if aws < 4.0:
+        if aws < 10.2:
             action_plan.append(
-                f"Available water storage is {aws:.1f} in; prioritize drought-response planning and tight in-season scouting intervals."
+                f"Available water storage is {aws:.1f} cm; prioritize drought-response planning and tight in-season scouting intervals."
             )
             watchouts.append(
                 "Moisture stress risk is elevated around rapid growth and reproductive stages."
             )
-        elif aws >= 6.0:
+        elif aws >= 15.2:
             optimize_for_success.append(
-                f"Water-holding capacity is strong ({aws:.1f} in); lean into higher-yield fertility and population where drainage allows."
+                f"Water-holding capacity is strong ({aws:.1f} cm); lean into higher-yield fertility and population where drainage allows."
             )
 
     precip = _safe_float(field_row.get("annual_precip_mm"))
@@ -523,7 +523,7 @@ def generate_farm_recommendations(
         crop: sum(1 for row in row_dicts if _crop_focus(row) == crop)
         for crop in _CROP_LABELS
     }
-    avg_aws = _average_column(field_df, "total_aws_inches")
+    avg_aws = _average_column(field_df, "total_aws_cm")
     avg_om = _average_column(field_df, "avg_om_pct")
     avg_precip = _average_column(field_df, "annual_precip_mm")
     low_diversity_fields = 0
@@ -541,7 +541,7 @@ def generate_farm_recommendations(
     ]
     if avg_aws is not None:
         bullets.append(
-            f"Average available water storage is {float(avg_aws):.1f} in across the farm; use that spread to rank which fields need the earliest stress scouting."
+            f"Average available water storage is {float(avg_aws):.1f} cm across the farm; use that spread to rank which fields need the earliest stress scouting."
         )
     if avg_om is not None:
         bullets.append(

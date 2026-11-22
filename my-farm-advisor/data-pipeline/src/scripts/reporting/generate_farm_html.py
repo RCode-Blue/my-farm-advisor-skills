@@ -458,7 +458,7 @@ def _field_card(
     for col, label in [
         ("avg_om_pct", "Avg OM (%)"),
         ("avg_ph", "Avg pH"),
-        ("total_aws_inches", "Total AWS (in)"),
+        ("total_aws_cm", "Total AWS (cm)"),
         ("avg_cec", "Avg CEC"),
         ("drainage_class", "Drainage class"),
         ("dominant_soil", "Dominant soil"),
@@ -478,6 +478,7 @@ def _field_card(
         else "<p>No weather data</p>"
     )
     ndvi_blocks = []
+    field_anchor = f"field-{fid[-6:]}"
     for key, label in [
         ("corn", "Corn average NDVI"),
         ("corn_peak_95", "Corn 95th %ile peak NDVI"),
@@ -486,7 +487,13 @@ def _field_card(
         ("current_season_cumulative", "Cumulative NDVI by crop and year"),
     ]:
         payload = ndvi_cards.get(key, "")
-        if payload:
+        if payload and key == "current_season_cumulative":
+            modal_id = f"ndvi-cum-modal-{idx}"
+            ndvi_blocks.append(
+                f'<div><h4>{label}</h4><a href="#{modal_id}" class="enlarge-thumb"><img src="data:image/png;base64,{payload}" style="width:100%;cursor:zoom-in" alt="{label}"></a>'
+                f'<div id="{modal_id}" class="modal"><div class="modal-content"><a href="#{field_anchor}" class="modal-close">&times; Close</a><h2>{label}</h2><img src="data:image/png;base64,{payload}" style="width:100%" alt="{label}"></div></div></div>'
+            )
+        elif payload:
             ndvi_blocks.append(
                 f'<div><h4>{label}</h4><img src="data:image/png;base64,{payload}" style="width:100%" alt="{label}"></div>'
             )
@@ -518,8 +525,6 @@ def _field_card(
     clean_dict = {
         k: _safe(v) for k, v in row_dict.items() if not k.endswith("_pct_rank")
     }
-
-    field_anchor = f"field-{fid[-6:]}"
 
     # Build soil profile thumbnails
     soil_thumbs = []
@@ -878,15 +883,16 @@ def main() -> None:
     <div class="farm-assets">
       <div class="farm-panel">
         <h3>Farm crop portfolio</h3>
-        <img src="data:image/png;base64,{farm_crop_b64}" alt="Farm CDL crop composition">
+        <a href="#farm-crop-modal" class="enlarge-thumb"><img src="data:image/png;base64,{farm_crop_b64}" alt="Farm CDL crop composition" style="cursor:zoom-in"></a>
       </div>
+      <div id="farm-crop-modal" class="modal"><div class="modal-content"><a href="#farm-overview" class="modal-close">&times; Close</a><h2>Farm crop portfolio</h2><img src="data:image/png;base64,{farm_crop_b64}" style="width:100%" alt="Farm CDL crop composition"></div></div>
       <div class="farm-panel">
         <h3>Farm summary poster</h3>
         {f'<a href="#farm-poster-modal" class="farm-poster-thumb"><img src="data:image/png;base64,{farm_poster_b64}" alt="Farm summary poster thumbnail" style="max-width:300px;cursor:pointer;"><p style="font-size:0.85rem;color:#2563eb;margin-top:0.5rem;">Click to view full poster</p></a>' if farm_poster_b64 else "<p>Farm summary poster unavailable</p>"}
       </div>
       <div class="farm-panel">
         <h3>Farm soil comparison</h3>
-        {f'<img src="data:image/png;base64,{farm_soil_compare_b64}" alt="Farm soil comparison">' if farm_soil_compare_b64 else "<p>Farm soil comparison unavailable</p>"}
+        {f'<a href="#farm-soil-modal" class="enlarge-thumb"><img src="data:image/png;base64,{farm_soil_compare_b64}" alt="Farm soil comparison" style="cursor:zoom-in"></a><div id="farm-soil-modal" class="modal"><div class="modal-content"><a href="#farm-overview" class="modal-close">&times; Close</a><h2>Farm soil comparison</h2><img src="data:image/png;base64,{farm_soil_compare_b64}" style="width:100%" alt="Farm soil comparison"></div></div>' if farm_soil_compare_b64 else "<p>Farm soil comparison unavailable</p>"}
       </div>
     </div>
   </div>
