@@ -197,18 +197,53 @@ def plot_crop_mix_stacked_100(ax, crop_mix: pd.DataFrame, title: str = "Crop com
         ax.text(0.5, 0.5, "No CDL data", ha="center", va="center")
         ax.set_axis_off()
         return ax
-    pct = _pct_col(crop_mix)
-    pivot = crop_mix.pivot_table(
-        index="year", columns="crop_name", values=pct, aggfunc="sum"
-    ).fillna(0)
-    colors = plt.get_cmap("tab20")(np.linspace(0, 1, max(1, len(pivot.columns))))
-    bottom = np.zeros(len(pivot))
-    for idx, crop_name in enumerate(pivot.columns):
-        values = pivot[crop_name].to_numpy(dtype=float)
-        ax.bar(pivot.index.astype(str), values, bottom=bottom, label=crop_name, color=colors[idx])
-        bottom += values
+    if "pixel_count" in crop_mix.columns:
+        by_crop = crop_mix.groupby(["year", "crop_name"]).pixel_count.sum()
+        totals = crop_mix.groupby("year").pixel_count.sum()
+        shares = (by_crop / totals.reindex(by_crop.index.get_level_values(0)).to_numpy() * 100)
+    else:
+        pct = _pct_col(crop_mix)
+        shares = crop_mix.groupby(["year", "crop_name"])[pct].mean()
+    pivot = shares.unstack(fill_value=0)
+    _stack_bars(ax, pivot, title, ylabel="Percent of farm area (area-weighted)")
+    return ax
+
+
+def plot_field_crop_breakdown(ax, field_cdl: pd.DataFrame, title: str = "Crop breakdown by year"):
+    if field_cdl.empty:
+        ax.text(0.5, 0.5, "No CDL data", ha="center", va="center")
+        ax.set_axis_off()
+        return ax
+    field_cdl = filter_cdl_categories(field_cdl)
+    pct = _pct_col(field_cdl)
+    pivot = field_cdl.pivot_table(index="year", columns="crop_name", values=pct, aggfunc="sum").fillna(0)
+    _stack_bars(ax, pivot, title, ylabel="Percent of field area")
+    return ax
+
+
+def _stack_bars(ax, pivot: pd.DataFrame, title: str, ylabel: str) -> None:
+    colors = {"Corn": "#1f77b4", "Soybeans": "#9ed9e8"}
+    years = [str(y) for y in pivot.index]
+    bottom = np.zeros(len(years))
+    for crop in ["Corn", "Soybeans"]:
+        if crop not in pivot.columns:
+            continue
+        vals = pivot[crop].to_numpy(dtype=float)
+        ax.bar(years, vals, bottom=bottom, label=crop, color=colors[crop], edgecolor="white")
+        bottom += vals
+    other_cols = [c for c in pivot.columns if c not in ("Corn", "Soybeans")]
+    if other_cols:
+        other = pivot[other_cols].sum(axis=1).to_numpy(dtype=float)
+        ax.bar(years, other, bottom=bottom, label="Other", color="#bbbbbb", edgecolor="white")
+        bottom += other
     ax.set_ylim(0, 100)
-    ax.set_ylabel("Percent of field")
+    ax.set_ylabel(ylabel)
     ax.set_title(title, fontsize=12, fontweight="bold")
     ax.legend(loc="upper left", fontsize=7)
-    return ax
+    for i, y in enumerate(years):
+        row = pivot.iloc[i]
+        c = float(row.get("Corn", 0))
+        s = float(row.get("Soybeans", 0))
+        ax.text(i, 50, f"C{c:.0f}\nS{s:.0f}", ha="center", va="center", fontsize=7,
+                color="white" if c > 50 else "black")
+

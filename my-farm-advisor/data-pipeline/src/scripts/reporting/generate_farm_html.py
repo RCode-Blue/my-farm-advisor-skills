@@ -41,7 +41,7 @@ _CDL_SKILL = ensure_skill_path("cdl-cropland")
 _CROP_STRATEGY_SKILL = ensure_skill_path("crop-strategy")
 _WEATHER_SKILL = ensure_skill_path("nasa-power-weather")
 
-from cdl_reporting import plot_crop_mix_stacked_100, summarize_crop_history
+from cdl_reporting import plot_crop_mix_stacked_100, plot_field_crop_breakdown, summarize_crop_history
 from crop_strategy import generate_farm_recommendations, generate_field_recommendations
 from headlands_ring import split_headlands_and_interior, summarize_headlands
 from paths import (
@@ -123,6 +123,14 @@ def _weather_b64(field_weather: pd.DataFrame) -> str:
     plot_temperature_doy_overlay(axes[0], field_weather)
     plot_gdd_doy_overlay(axes[1], field_weather)
     plot_precip_boxplot(axes[2], field_weather)
+    plt.tight_layout()
+    return _fig_to_b64(fig)
+
+
+def _field_cdl_b64(field_cdl: pd.DataFrame) -> str:
+    fig, ax = plt.subplots(figsize=(6, 4))
+    fig.patch.set_facecolor("#fafaf9")
+    plot_field_crop_breakdown(ax, field_cdl)
     plt.tight_layout()
     return _fig_to_b64(fig)
 
@@ -436,6 +444,7 @@ def _field_card(
     ndvi_cards: dict,
     strategy: dict[str, object],
     idx: int,
+    field_cdl: pd.DataFrame | None = None,
 ) -> str:
     fid = str(frow["field_id"])
     acres = float(frow.get("area_acres", 0))
@@ -562,6 +571,11 @@ def _field_card(
     return f"""
 <section class="field-card" id="{field_anchor}">
   <h2>Field {fid[-8:]} <span class="badge">{acres:.1f} ac</span></h2>
+
+  <div class="poster-preview">
+    <h3>Crop breakdown by year</h3>
+    {f'<img src="data:image/png;base64,{_field_cdl_b64(field_cdl)}" style="max-width:420px;" alt="Field crop breakdown by year">' if field_cdl is not None and not field_cdl.empty else "<p>No CDL data for this field</p>"}
+  </div>
 
   <div class="poster-preview">
     <h3>Field Poster</h3>
@@ -768,9 +782,11 @@ def main() -> None:
             df_row.to_dict() if hasattr(df_row, "to_dict") else dict(df_row),
             centroid_lat=_field_centroid_latitude(fields, idx_num),
         )
+        field_cdl = cdl[cdl["field_id"] == fid].copy()
         field_cards.append(
             _field_card(
-                frow, df_row, fw, poster_b64, soil_cards, ndvi_cards, strategy, idx_num
+                frow, df_row, fw, poster_b64, soil_cards, ndvi_cards, strategy, idx_num,
+                field_cdl=field_cdl,
             )
         )
 
