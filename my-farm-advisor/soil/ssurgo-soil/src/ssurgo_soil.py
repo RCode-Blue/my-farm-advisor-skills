@@ -582,7 +582,7 @@ def summarize_ssurgo_by_field(soil_full: pd.DataFrame) -> pd.DataFrame:
     Example:
         >>> full = download_full_ssurgo(fields)
         >>> summary = summarize_ssurgo_by_field(full)
-        >>> print(summary[['field_id', 'n_mukeys', 'dominant_soil', 'avg_om', 'total_aws_in']])
+        >>> print(summary[['field_id', 'n_mukeys', 'dominant_soil', 'avg_om', 'total_aws_cm']])
     """
     if soil_full.empty:
         return pd.DataFrame()
@@ -636,11 +636,11 @@ def summarize_ssurgo_by_field(soil_full: pd.DataFrame) -> pd.DataFrame:
             total_depth = (
                 field_data_horizons["horizon_thickness"] * field_data_horizons["comppct_r"]
             ).sum()
-            total_aws_in = (
+            total_aws_cm = (
                 (total_aws / total_depth * 200) if total_depth > 0 else None
             )  # Normalize to 200cm
         else:
-            total_aws_in = None
+            total_aws_cm = None
 
         # Drainage
         drainage = dom["drainagecl"]
@@ -682,7 +682,7 @@ def summarize_ssurgo_by_field(soil_full: pd.DataFrame) -> pd.DataFrame:
                 "avg_sand_pct": round(avg_sand, 1) if avg_sand else None,
                 "avg_bulk_density": round(avg_bd, 2) if avg_bd else None,
                 "avg_k_factor": round(avg_kfactor, 3) if avg_kfactor else None,
-                "total_aws_inches": round(total_aws_in, 2) if total_aws_in else None,
+                "total_aws_cm": round(total_aws_cm, 2) if total_aws_cm else None,
                 "ph_constraint": ph_constraint,
                 "erosion_risk": erosion_risk,
             }

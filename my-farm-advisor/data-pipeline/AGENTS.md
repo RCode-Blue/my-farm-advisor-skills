@@ -97,6 +97,15 @@ cd "${DATA_PIPELINE_DATA_ROOT}/data-pipeline/src"
   --weather-time-standard lst
 ```
 
+Generate lightweight interactive grower web map:
+
+```bash
+export DATA_PIPELINE_DATA_ROOT=/absolute/path/to/my-farm-advisor-runtime
+cd "${DATA_PIPELINE_DATA_ROOT}/data-pipeline/src"
+"${DATA_PIPELINE_DATA_ROOT}/data-pipeline/.venv/bin/python" \
+  scripts/reporting/generate_grower_webmap.py --grower-slug il-grower
+```
+
 Initialize shared geoadmin, maturity, weather, and CDL assets without seeding a farm:
 
 ```bash
@@ -124,7 +133,12 @@ cd "${DATA_PIPELINE_DATA_ROOT}/data-pipeline/src"
   --cdl-window-years 5
 ```
 
-Use the legacy NASA POWER point API only for small debugging pulls:
+Farm-level CDL years default to `DEFAULT_CDL_LATEST_YEAR` in `download_cdl.py` (2023, under the 2026-02-01 data cutoff). Override per run without changing the default:
+
+- `AG_CDL_YEARS=2021,2022,2023,2024,2025` sets an explicit year list and takes precedence.
+- `AG_CDL_LATEST_YEAR=2025` sets only the latest year.
+
+Years after the cutoff are an explicit, documented exception: CDL 2025 was published 2026-03-09, so use it only for runs that record the exception in their outputs.
 
 ```bash
 export DATA_PIPELINE_DATA_ROOT=/absolute/path/to/my-farm-advisor-runtime

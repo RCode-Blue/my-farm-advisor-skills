@@ -97,7 +97,10 @@ def coverage(tif_path: str | Path, geom_wgs84, *, nodata_extra: float | None = N
         in_field = geometry_mask([geom.__geo_interface__], out_shape=ds.shape,
                                  transform=ds.transform, invert=True)
         arr = ds.read(1, masked=True)
-        filled = np.asarray(np.ma.filled(arr, np.nan), dtype="float64")
+        # Cast to float64 BEFORE filling: numpy's MaskedArray.filled() rejects
+        # a nan fill_value on an integer dtype (NASADEM/ALOS int16 sources)
+        # with "Cannot convert fill_value nan to dtype int16" if filled first.
+        filled = np.ma.filled(arr.astype("float64"), np.nan)
         valid = np.isfinite(filled)
         if nodata_extra is not None:
             valid &= filled != nodata_extra

@@ -96,7 +96,7 @@ def _risk_matrix(ax, field_df):
     ax.set_title(
         "Risk / opportunity matrix", fontsize=10, fontweight="bold", loc="left"
     )
-    cap_col = "total_aws_inches" if "total_aws_inches" in field_df.columns else None
+    cap_col = "total_aws_cm" if "total_aws_cm" in field_df.columns else None
     risk_col = "headlands_pct" if "headlands_pct" in field_df.columns else None
     if cap_col is None or risk_col is None:
         ax.text(0.5, 0.5, "Insufficient data for matrix", ha="center", va="center")
@@ -333,7 +333,7 @@ def main() -> None:
     for col, label in [
         ("avg_avg_om_pct", "Avg OM"),
         ("avg_avg_ph", "Avg pH"),
-        ("avg_total_aws_inches", "Avg AWS (in)"),
+        ("avg_total_aws_cm", "Avg AWS (cm)"),
     ]:
         if col in row.index and pd.notna(row[col]):
             summary_lines.append(f"{label + ':':12s}{float(row[col]):.2f}")
@@ -362,7 +362,7 @@ def main() -> None:
         fig.add_subplot(gs[1, 0]), field_df, "area_acres", "Field size (acres)"
     )
     _ranking_bars(
-        fig.add_subplot(gs[1, 1]), field_df, "total_aws_inches", "Total AWS (inches)"
+        fig.add_subplot(gs[1, 1]), field_df, "total_aws_cm", "Total AWS (cm)"
     )
     _ranking_bars(fig.add_subplot(gs[1, 2]), field_df, "avg_om_pct", "Avg OM (%)")
     _ranking_bars(fig.add_subplot(gs[1, 3]), field_df, "headlands_pct", "Headlands (%)")
@@ -436,7 +436,7 @@ def main() -> None:
             "dominant_soil",
             "avg_om_pct",
             "avg_ph",
-            "total_aws_inches",
+            "total_aws_cm",
             "drainage_class",
             "rotation_sequence",
             "crop_diversity",

@@ -259,7 +259,12 @@ def main():
     if not us_fields.empty:
         print("State CDL coverage:", ", ".join(state_fips_values))
 
-    target_years = _target_cdl_years()
+    explicit_years = _parse_years(os.environ.get("AG_CDL_YEARS"))
+    if explicit_years:
+        target_years = explicit_years
+    else:
+        latest_year = int(os.environ.get("AG_CDL_LATEST_YEAR", DEFAULT_CDL_LATEST_YEAR))
+        target_years = _target_cdl_years(latest_year=latest_year)
     cached_years = [
         year
         for year in target_years

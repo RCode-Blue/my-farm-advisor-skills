@@ -285,6 +285,51 @@ def _write_summary(soil_data: pd.DataFrame) -> None:
     raise RuntimeError("_write_summary requires an explicit output path")
 
 
+def _profile_water_cm(soil_data: pd.DataFrame) -> pd.Series:
+    """Depth-weighted plant-available water (cm) over a 200 cm profile, per field.
+
+    Same formula as ssurgo_soil.summarize_ssurgo_by_field: AWC (cm/cm) times
+    horizon thickness (cm), weighted by component percentage, normalised to 200 cm.
+    """
+    d = soil_data.dropna(subset=["hzdept_r", "hzdepb_r", "awc_r", "comppct_r"]).copy()
+    d["thickness"] = d["hzdepb_r"] - d["hzdept_r"]
+    d = d[d["thickness"] > 0]
+    d["aws"] = d["awc_r"] * d["thickness"] * d["comppct_r"]
+    d["depth"] = d["thickness"] * d["comppct_r"]
+    totals = d.groupby("field_id")[["aws", "depth"]].sum()
+    return (totals["aws"] / totals["depth"] * 200).rename("total_aws_cm").round(2)
+
+
+def _surface_om_ph_dominant(soil_data: pd.DataFrame) -> pd.DataFrame:
+    """Per field: OM and pH over 0-30 cm, and the highest-share component name.
+
+    Each horizon contributes only its part inside 0-30 cm, weighted by that
+    thickness and the component's share (comppct_r) of the map unit.
+    """
+    d = soil_data.copy()
+    d["top"] = d["hzdept_r"].clip(lower=0, upper=30)
+    d["bot"] = d["hzdepb_r"].clip(lower=0, upper=30)
+    d["th30"] = (d["bot"] - d["top"]).clip(lower=0)
+    d = d[(d["th30"] > 0) & d["comppct_r"].notna()].copy()
+    d["w"] = d["th30"] * d["comppct_r"]
+    out = {}
+    for fid, grp in d.groupby("field_id"):
+        g = grp.dropna(subset=["om_r", "ph1to1h2o_r"])
+        if g.empty or g["w"].sum() == 0:
+            out[fid] = (None, None)
+            continue
+        om = (g["om_r"] * g["w"]).sum() / g["w"].sum()
+        ph = (g["ph1to1h2o_r"] * g["w"]).sum() / g["w"].sum()
+        out[fid] = (round(om, 2), round(ph, 2))
+    rows = []
+    for fid, grp in soil_data.groupby("field_id"):
+        dom = grp.dropna(subset=["comppct_r"]).sort_values("comppct_r", ascending=False)
+        name = dom["compname"].iloc[0] if not dom.empty else grp["compname"].iloc[0]
+        om, ph = out.get(fid, (None, None))
+        rows.append({"field_id": fid, "avg_om_pct": om, "avg_ph": ph, "dominant_soil": name})
+    return pd.DataFrame(rows).set_index("field_id")
+
+
 def _soil_polygon_cache_has_features(path: Path) -> bool:
     if not path.exists():
         return False
@@ -334,6 +379,14 @@ def _write_field_polygon_caches(
         if polygons.empty:
             continue
         polygons["field_id"] = field_id
+        field_soil = soil_rows.loc[soil_rows["field_id"].astype(str) == field_id]
+        if "compname" in field_soil.columns and not field_soil.empty:
+            dominant = (
+                field_soil.sort_values("comppct_r", ascending=False)
+                .drop_duplicates("mukey")
+                .set_index("mukey")["compname"]
+            )
+            polygons["compname"] = polygons["mukey"].astype(str).map(dominant)
         field_boundary = gpd.GeoDataFrame(
             fields_wgs84[fields_wgs84["field_id"].astype(str) == field_id].copy(),
             geometry="geometry",
@@ -611,18 +664,16 @@ def main():
                 n_mukeys=("mukey", "nunique"),
                 n_components=("compname", "nunique"),
                 n_horizons=("mukey", "count"),
-                avg_om_pct=("om_r", "mean"),
-                avg_ph=("ph1to1h2o_r", "mean"),
-                total_aws_inches=("awc_r", "sum"),
                 avg_cec=("cec7_r", "mean"),
                 avg_clay_pct=("claytotal_r", "mean"),
                 avg_sand_pct=("sandtotal_r", "mean"),
-                dominant_soil=("compname", "first"),
                 drainage_class=("drainagecl", "first"),
                 soil_source=("soil_source", "first"),
             )
             .assign(ph_constraint="none", erosion_risk="moderate")
         )
+        grouped = grouped.merge(_profile_water_cm(soil_data).reset_index(), on="field_id", how="left")
+        grouped = grouped.merge(_surface_om_ph_dominant(soil_data).reset_index(), on="field_id", how="left")
         grouped.to_csv(farm_summary_output, index=False)
 
         if field_slug_map:

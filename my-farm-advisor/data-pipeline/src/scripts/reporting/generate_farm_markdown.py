@@ -248,7 +248,7 @@ def main() -> None:
     for col, label in [
         ("avg_avg_om_pct", "Avg Organic Matter"),
         ("avg_avg_ph", "Avg pH"),
-        ("avg_total_aws_inches", "Avg Water Storage"),
+        ("avg_total_aws_cm", "Avg Water Storage"),
     ]:
         if col in farm_df.columns and pd.notna(farm_df.iloc[0].get(col)):
             md_lines.append(f"| {label} | {float(farm_df.iloc[0][col]):.2f} |")
@@ -271,7 +271,7 @@ def main() -> None:
         "dominant_soil",
         "avg_om_pct",
         "avg_ph",
-        "total_aws_inches",
+        "total_aws_cm",
         "drainage_class",
         "crop_diversity",
         "corn_years",
@@ -367,7 +367,7 @@ def main() -> None:
         for col, label in [
             ("area_acres", "Area"),
             ("headlands_pct", "Headlands %"),
-            ("total_aws_inches", "Total AWS"),
+            ("total_aws_cm", "Total AWS"),
             ("avg_om_pct", "Avg OM %"),
             ("avg_ph", "Avg pH"),
             ("drainage_class", "Drainage"),
