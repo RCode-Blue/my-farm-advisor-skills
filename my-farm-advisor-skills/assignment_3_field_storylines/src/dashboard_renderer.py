@@ -224,20 +224,21 @@ def create_dashboard_figure(
     axes[-1].set_xticks(pd.date_range(start=dates[0], end=dates[-1], freq='2W'))
     
     # =========================================================================
-    # FIGURE HEADER
+    # FIGURE HEADER (Two lines)
     # =========================================================================
-    fig.suptitle(f'{field_id}, {year}: {crop_name} | {county} County, {state}',
-                fontsize=15, fontweight='bold', y=0.995)
+    # Line 1: Field and year info
+    fig.text(0.5, 0.993, f'{field_id}, {year}: {crop_name} | {county} County, {state}',
+            ha='center', fontsize=15, fontweight='bold')
     
-    subtitle = (f'GDD: {final_gdd:.0f} | Precip: {total_precip:.1f}mm | '
-                f'NDVI Range: {ndvi_stats["ndvi_min"]:.2f}-{ndvi_stats["ndvi_max"]:.2f} '
-                f'(peak {peak_ndvi:.2f} on {peak_ndvi_date}) | '
-                f'{len(ndvi_obs)} Sentinel observations')
+    # Line 2: Metrics
+    fig.text(0.5, 0.987, f'GDD: {final_gdd:.0f} | Precip: {total_precip:.1f}mm | '
+                         f'NDVI Range: {ndvi_stats["ndvi_min"]:.2f}-{ndvi_stats["ndvi_max"]:.2f} '
+                         f'(peak {peak_ndvi:.2f} on {peak_ndvi_date}) | '
+                         f'{len(ndvi_obs)} Sentinel observations',
+            ha='center', fontsize=9, style='italic')
     
-    fig.text(0.5, 0.986, subtitle, ha='center', fontsize=10, style='italic')
-    
-    # Adjust layout
-    plt.tight_layout(rect=[0, 0, 1, 0.98])
+    # Adjust layout (leave more space at top for two-line header)
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
     
     # Save figure
     if output_path is None:
