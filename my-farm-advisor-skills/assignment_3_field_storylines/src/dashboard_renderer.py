@@ -224,21 +224,21 @@ def create_dashboard_figure(
     axes[-1].set_xticks(pd.date_range(start=dates[0], end=dates[-1], freq='2W'))
     
     # =========================================================================
-    # FIGURE HEADER (Two lines)
+    # FIGURE HEADER (Two lines with proper spacing)
     # =========================================================================
-    # Line 1: Field and year info
-    fig.text(0.5, 0.993, f'{field_id}, {year}: {crop_name} | {county} County, {state}',
+    # Adjust layout first to reserve space at top
+    plt.tight_layout(rect=[0, 0, 1, 0.94])
+    
+    # Line 1: Field and year info (higher position)
+    fig.text(0.5, 0.965, f'{field_id}, {year}: {crop_name} | {county} County, {state}',
             ha='center', fontsize=15, fontweight='bold')
     
-    # Line 2: Metrics
-    fig.text(0.5, 0.987, f'GDD: {final_gdd:.0f} | Precip: {total_precip:.1f}mm | '
+    # Line 2: Metrics (below field info)
+    fig.text(0.5, 0.945, f'GDD: {final_gdd:.0f} | Precip: {total_precip:.1f}mm | '
                          f'NDVI Range: {ndvi_stats["ndvi_min"]:.2f}-{ndvi_stats["ndvi_max"]:.2f} '
                          f'(peak {peak_ndvi:.2f} on {peak_ndvi_date}) | '
                          f'{len(ndvi_obs)} Sentinel observations',
             ha='center', fontsize=9, style='italic')
-    
-    # Adjust layout (leave more space at top for two-line header)
-    plt.tight_layout(rect=[0, 0, 1, 0.96])
     
     # Save figure
     if output_path is None:
