@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iowa Field ia-r1-20 - Seasonal Weather & Vegetation Analysis (2021-2025)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .controls {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .year-btn {
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .year-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .year-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .year-gallery {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .gallery-header {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 20px;
+        }
+        
+        .gallery-header h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .metadata {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .metadata-item {
+            background: #f0f7ff;
+            padding: 12px;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+        }
+        
+        .metadata-label {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+        
+        .metadata-value {
+            color: #333;
+            font-size: 1.1em;
+            margin-top: 4px;
+        }
+        
+        .dashboard-container {
+            margin: 30px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dashboard-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #f8f9fa;
+        }
+        
+        .events-section {
+            margin-top: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .events-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .event-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .event-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        
+        .event-type.dry_spell {
+            background: #e67e22;
+        }
+        
+        .event-type.heavy_rain {
+            background: #3498db;
+        }
+        
+        .event-type.heat_stress {
+            background: #e74c3c;
+        }
+        
+        .event-type.frost {
+            background: #2c3e50;
+        }
+        
+        .event-date {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 0.9em;
+        }
+        
+        .event-description {
+            color: #555;
+            margin-top: 8px;
+            font-size: 0.95em;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #dee2e6;
+            font-size: 0.9em;
+        }
+        
+        .footer p {
+            margin: 5px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .controls {
+                padding: 15px;
+                gap: 8px;
+            }
+            
+            .year-btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .metadata {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Iowa Field ia-r1-20 - Seasonal Weather & Vegetation Analysis (2021-2025)</h1>
+            <p>Field-Season Weather & Vegetation Analysis</p>
+        </div>
+        
+        <div class="controls">
+            <span style="color: #667; font-weight: 600;">Select Year:</span>
+            <button class="year-btn" onclick="showYear(2021)">2021</button><button class="year-btn" onclick="showYear(2022)">2022</button><button class="year-btn" onclick="showYear(2023)">2023</button><button class="year-btn" onclick="showYear(2024)">2024</button><button class="year-btn" onclick="showYear(2025)">2025</button>
+        </div>
+        
+        <div class="content">
+            
+    <div id="year-2021" class="year-gallery" style="display: block;">
+        <div class="gallery-header">
+            <h2>ia-r1-20 - 2021 (soybeans)</h2>
+            <div class="metadata">
+        <div class="metadata-item">
+            <div class="metadata-label">Crop</div>
+            <div class="metadata-value">soybeans</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Peak NDVI</div>
+            <div class="metadata-value">0.8485 on 2021-08-22</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Total Precipitation</div>
+            <div class="metadata-value">510.8 mm</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Cumulative GDD</div>
+            <div class="metadata-value">1765.2°C</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Detected Events</div>
+            <div class="metadata-value">0 events</div>
+        </div>
+    </div>
+        </div>
+        
+        <div class="dashboard-container">
+            <img src="ia-r1-20_2021_soybeans_dashboard.png" alt="Dashboard for 2021" class="dashboard-image">
+        </div>
+        
+        
+    </div>
+
+    <div id="year-2022" class="year-gallery" style="display: none;">
+        <div class="gallery-header">
+            <h2>ia-r1-20 - 2022 (corn)</h2>
+            <div class="metadata">
+        <div class="metadata-item">
+            <div class="metadata-label">Crop</div>
+            <div class="metadata-value">corn</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Peak NDVI</div>
+            <div class="metadata-value">0.5988 on 2022-08-04</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Total Precipitation</div>
+            <div class="metadata-value">383.0 mm</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Cumulative GDD</div>
+            <div class="metadata-value">1693.2°C</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Detected Events</div>
+            <div class="metadata-value">0 events</div>
+        </div>
+    </div>
+        </div>
+        
+        <div class="dashboard-container">
+            <img src="ia-r1-20_2022_corn_dashboard.png" alt="Dashboard for 2022" class="dashboard-image">
+        </div>
+        
+        
+    </div>
+
+    <div id="year-2023" class="year-gallery" style="display: none;">
+        <div class="gallery-header">
+            <h2>ia-r1-20 - 2023 (soybeans)</h2>
+            <div class="metadata">
+        <div class="metadata-item">
+            <div class="metadata-label">Crop</div>
+            <div class="metadata-value">soybeans</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Peak NDVI</div>
+            <div class="metadata-value">0.6584 on 2023-08-12</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Total Precipitation</div>
+            <div class="metadata-value">473.5 mm</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Cumulative GDD</div>
+            <div class="metadata-value">1796.3°C</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Detected Events</div>
+            <div class="metadata-value">0 events</div>
+        </div>
+    </div>
+        </div>
+        
+        <div class="dashboard-container">
+            <img src="ia-r1-20_2023_soybeans_dashboard.png" alt="Dashboard for 2023" class="dashboard-image">
+        </div>
+        
+        
+    </div>
+
+    <div id="year-2024" class="year-gallery" style="display: none;">
+        <div class="gallery-header">
+            <h2>ia-r1-20 - 2024 (corn)</h2>
+            <div class="metadata">
+        <div class="metadata-item">
+            <div class="metadata-label">Crop</div>
+            <div class="metadata-value">corn</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Peak NDVI</div>
+            <div class="metadata-value">0.5199 on 2024-08-31</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Total Precipitation</div>
+            <div class="metadata-value">697.9 mm</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Cumulative GDD</div>
+            <div class="metadata-value">1641.9°C</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Detected Events</div>
+            <div class="metadata-value">0 events</div>
+        </div>
+    </div>
+        </div>
+        
+        <div class="dashboard-container">
+            <img src="ia-r1-20_2024_corn_dashboard.png" alt="Dashboard for 2024" class="dashboard-image">
+        </div>
+        
+        
+    </div>
+
+    <div id="year-2025" class="year-gallery" style="display: none;">
+        <div class="gallery-header">
+            <h2>ia-r1-20 - 2025 (soybeans)</h2>
+            <div class="metadata">
+        <div class="metadata-item">
+            <div class="metadata-label">Crop</div>
+            <div class="metadata-value">soybeans</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Peak NDVI</div>
+            <div class="metadata-value">0.5652 on 2025-07-14</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Total Precipitation</div>
+            <div class="metadata-value">641.8 mm</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Cumulative GDD</div>
+            <div class="metadata-value">1669.1°C</div>
+        </div>
+        <div class="metadata-item">
+            <div class="metadata-label">Detected Events</div>
+            <div class="metadata-value">0 events</div>
+        </div>
+    </div>
+        </div>
+        
+        <div class="dashboard-container">
+            <img src="ia-r1-20_2025_soybeans_dashboard.png" alt="Dashboard for 2025" class="dashboard-image">
+        </div>
+        
+        
+    </div>
+
+        </div>
+        
+        <div class="footer">
+            <p><strong>Field-Season Storylines</strong> - Aligned NDVI, Weather & GDD Analysis</p>
+            <p>Generated on 2026-11-27 04:58:57</p>
+        </div>
+    </div>
+    
+    <script>
+        function showYear(year) {
+            // Hide all galleries
+            document.querySelectorAll('.year-gallery').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.year-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected gallery
+            document.getElementById('year-' + year).style.display = 'block';
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Initialize first year as active
+        document.querySelectorAll('.year-btn')[0].classList.add('active');
+    </script>
+</body>
+</html>

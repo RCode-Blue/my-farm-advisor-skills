@@ -95,12 +95,48 @@ EOF
 - **Fixed Calendar:** May 1 - Oct 31 for all years; actual planting/harvest may vary
 - **GDD Base:** 10°C standard for corn/soybeans; adjust `gdd_base_temp_c` parameter for other crops
 
+## HTML Dashboard Viewer (Stretch Goal)
+
+Generate interactive HTML viewers from existing dashboards and event data.
+
+**Standalone function** — works independently of skill to create polished dashboards:
+
+```python
+from src.html_generator import create_field_dashboard_summary
+
+html_file = create_field_dashboard_summary(
+    field_id="ia-r1-20",
+    output_dir="./examples",
+    title="Iowa Field ia-r1-20 - Seasonal Analysis"
+)
+```
+
+**Example output:** `ia-r1-20_dashboard_summary.html`
+- Interactive year selection buttons (2021-2025)
+- Full-sized dashboard images
+- Metadata display (crop, NDVI peak, precipitation, GDD)
+- Event cards (25-26 events per year, color-coded)
+- Responsive design (mobile-friendly)
+- Professional styling with animations
+
+**For skill integration** (optional parameter):
+```python
+# When generate_html=True, skill auto-creates HTML alongside dashboards
+generate_field_storyline_dashboards(
+    ...,
+    generate_html=True  # ← New optional parameter
+)
+```
+
+See `HTML_GENERATOR_GUIDE.md` for complete documentation.
+
 ## Technical Details
 
 See:
 - `STEP_5_SUMMARY.md` — Workflow implementation and test results
 - `STEP_6_SUMMARY.md` — Dashboard generation and analysis insights
-- `src/` — Six production-ready Python modules (1,107 lines total)
+- `HTML_GENERATOR_GUIDE.md` — Interactive HTML viewer generation
+- `src/` — Seven production-ready Python modules (1,400+ lines total)
 
 ## References
 
